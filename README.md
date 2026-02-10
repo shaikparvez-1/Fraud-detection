@@ -18,6 +18,7 @@ The application predicts whether a financial transaction is *Fraudulent* or *Saf
 - Pandas
 - Scikit-learn
 - Streamlit
+- check the output:https://fraud-detection123.streamlit.app/
 
 ---
 
