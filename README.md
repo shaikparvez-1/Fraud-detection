@@ -38,3 +38,31 @@ streamlit run app.py
 ---
 
 ## 🗂 Project Structure
+---
+
+### 🔹 Step 3: Click *Commit new file*
+✅ README added successfully
+
+---
+
+# ✅ PART 2: DEPLOY TO STREAMLIT CLOUD 🌐
+
+Now the exciting part 😄
+
+---
+
+## 🔹 Step 1: Go to Streamlit Cloud
+👉 https://share.streamlit.io  
+(or https://streamlit.io → *Sign in*)
+
+Login with *GitHub*.
+
+---
+
+## 🔹 Step 2: Click *New app*
+
+You’ll see a form.
+
+Fill it like this 👇
+
+- *Repository:*
