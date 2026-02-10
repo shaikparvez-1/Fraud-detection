@@ -14,10 +14,12 @@ st.markdown("""
 *Institute:* Srinivasa Institute of Technology and Science
 """)
 
-# LOAD DATASET
-data = pd.read_csv("fraud_dataset.csv")
+@st.cache_data
+def load_data():
+    return pd.read_csv("fraud_dataset.csv")
 
-# PREPARE DATA
+data = load_data()
+
 X = data[
     [
         "step",
@@ -32,40 +34,35 @@ X = data[
 
 y = data["isFraud"]
 
-# ENCODE TYPE
-X.loc[:, "type"] = X["type"].astype("category").cat.codes
+X["type"] = X["type"].astype("category").cat.codes
 
-# TRAIN MODEL
 model = LogisticRegression(max_iter=1000)
 model.fit(X, y)
 
-st.write("Enter transaction details:")
+st.subheader("Enter Transaction Details")
 
-# USER INPUTS
-step = st.number_input("Step", min_value=0)
+step = st.number_input("Step", 0)
 type_input = st.selectbox("Transaction Type", ["CASH_OUT", "TRANSFER"])
-amount = st.number_input("Amount", min_value=0.0)
-oldbalanceOrg = st.number_input("Old Balance (Sender)", min_value=0.0)
-newbalanceOrig = st.number_input("New Balance (Sender)", min_value=0.0)
-oldbalanceDest = st.number_input("Old Balance (Receiver)", min_value=0.0)
-newbalanceDest = st.number_input("New Balance (Receiver)", min_value=0.0)
+amount = st.number_input("Amount", 0.0)
+oldbalanceOrg = st.number_input("Old Balance (Sender)", 0.0)
+newbalanceOrig = st.number_input("New Balance (Sender)", 0.0)
+oldbalanceDest = st.number_input("Old Balance (Receiver)", 0.0)
+newbalanceDest = st.number_input("New Balance (Receiver)", 0.0)
 
 type_encoded = 0 if type_input == "CASH_OUT" else 1
 
 if st.button("Check Fraud"):
-    features = np.array(
-        [[
-            step,
-            type_encoded,
-            amount,
-            oldbalanceOrg,
-            newbalanceOrig,
-            oldbalanceDest,
-            newbalanceDest,
-        ]]
-    )
+    input_data = np.array([[
+        step,
+        type_encoded,
+        amount,
+        oldbalanceOrg,
+        newbalanceOrig,
+        oldbalanceDest,
+        newbalanceDest,
+    ]])
 
-    prediction = model.predict(features)
+    prediction = model.predict(input_data)
 
     if prediction[0] == 1:
         st.error("⚠️ Fraudulent Transaction Detected")
